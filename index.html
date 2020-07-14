@@ -14,6 +14,7 @@
         margin: 0;
         padding: 0;
         background-color: antiquewhite;
+        font-weight: 600;
         display: flex;
         flex: 1;
         height: 100vh;
@@ -75,11 +76,27 @@
     .no-transition{
         transition: none;
     }
+    #date, #day{
+        position: absolute;
+        top: 50%;
+        padding: 3px;
+        border: 1px solid transparent;
+        box-shadow: inset 2px 2px 5px grey;
+    }
+    #date{
+        left: 20%;
+        
+    }
+    #day{
+        right: 18%;
+    }
 </style>
 <body>
 
     <div class="clock">
         <div class="clock-face">
+            <div id = "date"></div>
+            <div id = "day"></div>
             <div class= "middle-dot"></div>
             <div class="hand" id="hour-hand"></div>
             <div class="hand" id="minute-hand"></div>
@@ -92,12 +109,39 @@
         var minuteHand = document.getElementById("minute-hand");
         var secondHand = document.getElementById("second-hand");
 
-        function setDate(){
+        //get and set the current date and day
+        function currentDay() {
             var date = new Date();
             var hour = date.getHours();
             var min = date.getMinutes();
             var sec = date.getSeconds();
 
+            var day = date.getDate();
+            var month = date.getMonth();
+
+            var period = ''
+
+            var monthNames = ["Jan", "Feb",  "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
+            var dayNames = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"]
+
+            period = (hour < 12) ? "A.M" : "P.M" 
+
+            day = (day < 10) ? ('0' + day) :  day;
+            month = (month < 10) ? ('0' + month) :  month;
+
+            var currentDate = monthNames[date.getMonth()]+ " " + day;
+            document.getElementById("date").innerHTML = currentDate;
+                        
+            var today = dayNames[date.getDay()] + " " + period;
+            document.getElementById("day").innerHTML = today;
+        }
+
+        function setDate(){
+            var date = new Date();
+            var hour = date.getHours();
+            var min = date.getMinutes();
+            var sec = date.getSeconds();
+            
             var secondsDegree = ((sec / 60) * 360) + 90            
             secondHand.style.transform = `rotate(${secondsDegree}deg)`;            
             //remove transition to prevent the second-hand from briefly going back to 9 on reaching 12
@@ -124,7 +168,10 @@
             }
             hourHand.style.transform = `rotate(${hoursDegree}deg) scale(0.6, 1)`; //scale is added to reduce the height of hourhand - scale(height, width)
              
+             //incorporate day into clock
+            currentDay()
         }
+        
         setInterval(setDate, 1000);
     </script>
 </body>

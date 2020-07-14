@@ -1,3 +1,7 @@
 # js-analogue-clock
 
-## JavaScript and CSS clock following Javascript30 https://js-analogue-clock.herokuapp.com/
+Analogue clock showing date and time
+built with HTML, CSS and vanilla JavaScript
+
+## Link
+ https://js-analogue-clock.herokuapp.com/
